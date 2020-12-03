@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html ng-app="demoApp" ng-controller="DemoCtrl">
+
+<head>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.0/dist/email.min.js">
+    </script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-animate.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="./src/angular-steps.js"></script>
+    <script src="./app_html_set3.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>angular-steps demo</title>
+    <link rel="stylesheet" href="./src/angular-steps.css">
+    <!-- <script>
+        $(window).on("blur focus", function(e) {
+            var prevType = $(this).data("prevType");
+
+            if (prevType != e.type) { //  reduce double fire issues
+                switch (e.type) {
+                    case "blur":
+                        // $('#same').css("display",'block');
+                        //$("#main").css('display','none')
+                        window.setTimeout(stop_page(), 5000);
+                        break;
+                    case "focus":
+                        //$('#same').text("Focused");
+                        break;
+                }
+            }
+
+            $(this).data("prevType", e.type);
+        })
+
+        function stop_page() {
+            //$('#same').css("display", 'block');
+            $("#main").css('display', 'none');
+
+        }
+    </script> -->
+    
+
+    <script>
+         function InputDetails(){
+                    var name =document.getElementById("your_name").value;
+                    var email =document.getElementById("your_email").value;
+                    if(!name || !email)
+                    {
+                        alert("Enter all values");
+                        return;
+                    }
+                    else if(!isNaN(name))
+                    {
+                        alert("Enter in alphabets");
+                        return;
+                    }
+         }
+         function radioget(getValue)
+             { 
+              document.getElementById('mscope').innerHTML=getValue;
+              var mscope = document.getElementById('mscope').getValue;
+            //   alert("hello")
+            }
+function handleClick(value)
+{
+console.log(value);
+}
+    </script>
+</head>
+
+<body>
+    <div>
+        <h1 id="same" class="same">
+            You have been disqualified from the test
+        </h1>
+    </div>
+    <form id="test_form">
+        <steps id="main" on-finish="finished()" current-step="stepName">
+            <step class="step1" name="first">
+                <div class="steps">
+                    <div class="flex-container">
+                        <div class="left_menu">
+                            <div>
+                                <br>
+
+                                <h1>Read Instructions carefully</h1>
+                                <br>
+                                <ul>
+                                    <li><b>Once you click on ready to go button screen will be in full panel</b></li>
+                                    <br>
+                                    <br>
+                                    <li> <b>There is timer on the top centre of page. 5 minutes before finish time you will be notified</b> </li>
+                                    <br>
+                                    <br>
+                                    <li> <b>Dont open another tab or close the browser or will receive this message on screen "You are disqualified from test"</b></li>
+                                    <br>
+                                    <br>
+                                    <li> <b>Best of luck</b></li>
+                                    <br>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="inner_container_candiate">
+                            <div id="starttime"></div>
+
+                            <div id="endtime"></div>
+
+                            <div id="showtime"></div>
+                           
+                            <div style="margin-left: 600px;">
+                                <button type="button" id="ready"   btn btn-secondary btn-lg" step-next ng-click="fullpage()">Start</button>
+                        
+                            </div>
+                            
+                            <h1 class="heading_1">
+                              <b> Submit Your Details</b> 
+                            </h1>
+            
+                            <div id="border">
+                             <div class="detail">
+                                <h3>
+                                    Name :
+                                </h3>
+                                <input type="text"  id="your_name" class="your_name" placeholder="Aman Singh" required >
+                                <h3>
+                                    Email Id :
+                                </h3>
+                                <input type="text" id="your_email" class="your_email" placeholder="amansingh12@gmail.com" required>
+                             </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step2" name="first" onload="f1()">
+                <div class="steps">
+                    <div class="container">
+                        <div class="inner_container">
+                            <div id="starttime"></div>
+
+                            <div id="endtime"></div>
+
+                            <div id="showtime"></div>
+                            <div class="timer">
+                                <h3 id="count_1">Time Left {{countDown0}} sec</h3>
+                            </div>
+                            <div style="margin-left: 700px;">
+                                <button type="button" class="btn btn-secondary btn-lg"  step-next ng-click="fetch()">Next</button>
+                            </div>
+                            <div id= "about"><h1 class="js_ques_align">Tell Us about yourself</h1></div>
+                        </div>
+                        <div class="input_text">
+                            <textarea rows="10" id="tell" ng-model="tell" class="tell box" cols="100" placeholder="write here..." name="description">
+                            Enter details here...
+                         </textarea>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </step>
+            <step class="step3">
+                <div class="steps">
+                    <div class="container">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class=" timer1 count">
+                            <h3 id="count_2">Time Left {{countDown01}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type=" button " class="btn btn-secondary btn-lg  prev" step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch1() ">Next</button>
+                        </div>                             
+                            <div id="ques1"><h1 class="js_ques_align">Q1 :What is difference between HTML and XHTML ?</h1></div>
+                        <div class="input_text" >
+                            <textarea rows="10" id="cook" ng-model="cook " class="tell box" cols="100" placeholder="write here..." name="description">
+                            Enter details here...
+                         </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer2 count">
+                            <h3 id="count_3">Time Left {{countDown02}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch2() ">Next</button>
+                        </div>
+                        <div id="ques2"><h1 class="js_ques_align">Q2 : What is SVG ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="asynch" ng-model="tell2 " class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer3 count">
+                            <h3 id="count_4">Time Left {{countDown03}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch4() ">Next</button>
+                        </div>
+                        <div id="ques3"><h1 class="js_ques_align">Q3 : What is the use of a span tag? Explain with example ?</h1></div>
+                                <div class="input_text">
+                                    <textarea type="text " rows="10" id="push"  cols="100" ng-model="push " class="tell box" placeholder="write here..."></textarea>
+                                </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer4 count">
+                            <h3 id="count_5">Time Left {{countDown04}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch5() ">Next</button>
+                        </div>
+                        <div id="ques4"><h1 class="js_ques_align">Q4 : What is Cell Spacing and Cell Padding ?</h1></div>
+                    </div>
+                    <div class="input_text_output">
+                        <textarea type="text " rows="10" cols="100" id="typeof" ng-model="typeof " placeholder="write here..." class="tell box"></textarea>
+                    </div>
+                </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer5 count">
+                            <h3 id="count_6">Time Left {{countDown05}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch6() ">Next</button>
+                        </div>
+                        <div id="ques5"><h1 class="js_ques_align">Q5 : What's the difference between a relative, fixed, absolute and statically positioned element ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="binding" ng-model="binding " class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer6 count">
+                            <h3 id="count_7">Time Left {{countDown06}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch3() ">Next</button>
+                        </div>
+                        <div id="ques6"><h1 class="js_ques_align">Q6 : What are logical and physical tags in HTML ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="hscope" ng-model="hscope" class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer7 count">
+                            <h3 id="count_8">Time Left {{countDown07}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch7() ">Next</button>
+                        </div>
+                        <div id="ques7"><h1 class="js_ques_align">Q7 : What are the uses of an embedded style sheet ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="iscope" ng-model="iscope" class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer8 count">
+                            <h3 id="count_9">Time Left {{countDown08}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch8() ">Next</button>
+                        </div>
+                        <div id="ques8"><h1 class="js_ques_align">Q8 : What are gradients in CSS  ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="jscope" ng-model="jscope" class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer9 count">
+                            <h3 id="count_10">Time Left {{countDown09}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch9() ">Next</button>
+                        </div>
+                        <div id="ques9"><h1 class="js_ques_align">Q9 : Differentiate between the ID and class ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="kscope" ng-model="kscope" class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer10 count">
+                            <h3 id="count_11">Time Left {{countDown010}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch10() ">Next</button>
+                        </div>
+                        <div id="ques10"><h1 class="js_ques_align "> Q10 : What is Quirks mode in HTML5 ?</h1></div>
+
+                        <div class="input_text">
+                            <textarea rows="10" id="lscope" ng-model="lscope" class="tell box" cols="100" placeholder="write here..." name="description">
+                                    Enter details here...
+                                 </textarea>
+                        </div>
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                         <div id="endtime"></div>
+
+                         <div id="showtime"></div>
+                         <div class="timer11 count">
+                            <h3 id="count_12">Time Left {{countDown011}} sec</h3>
+                         </div>
+                         <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch11() ">Next</button>
+                         </div>
+                         <h1 class="tickques">Q11 : Tick the correct answer ? </h1></div>
+                         <div id="ques11" class="radio_ques"> 11. What is the default value of offset ?</div> -->
+                         <div class="radio_ans">
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"20"' ng-change=" " name="rdoResult">20</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"10"' ng-change=" " name="rdoResult">10</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"30"' ng-change=" " name="rdoResult">30</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"50"' ng-change=" " name="rdoResult">50</label>
+                            </div>
+                         </div>     
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer12 count">
+                            <h3 id="count_13">Time Left {{countDown012}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch12() ">Next</button>
+                        </div>
+                        <div><h1 class="tickques">Q12 : Tick the correct answer ? </h1></div>
+                        <div id="ques12" class="radio_ques"> 12. Which class adds a rounded border around an element ?</div>
+                        <div class="radio_ans">
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".well-sm"' ng-change=" " name="rdoResult">.well-sm</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".well-lg"' ng-change=" " name="rdoResult">.well-lg</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".well"' ng-change=" " name="rdoResult">.well</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".divider"' ng-change=" " name="rdoResult">.divider</label>
+                            </div>
+                         </div>     
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer13 count">
+                            <h3 id="count_14">Time Left {{countDown013}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch13() ">Next</button>
+                        </div>
+                        <div><h1 class="tickques">Q13 : Tick the correct answer ? </h1></div>
+                        <div id="ques13" class="radio_ques"> 13. Which is not a container for embedded content?</div>
+                        <div class="radio_ans">
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".embed-responsive"' ng-change=" " name="rdoResult">.embed-responsive</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"embed-responsive-16by9"' ng-change=" " name="rdoResult">embed-responsive-16by9</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".embed-responsive-4by3"' ng-change=" " name="rdoResult">.embed-responsive-4by3</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".embed-responsive-item"' ng-change=" " name="rdoResult">.embed-responsive-item</label>
+                            </div>
+                         </div>     
+                    </div>
+                </div>
+            </step>
+            <step class="step4 ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer14 count">
+                            <h3 id="count_15">Time Left {{countDown014}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type="button " class="btn btn-secondary btn-lg " step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch14() ">Next</button>
+                        </div>
+                        <div><h1 class="tickques">Q14 : Tick the correct answer ? </h1></div>
+                        <div id="ques14" class="radio_ques">14. Which style button that should open navbar on small screens ?</div>                       
+                        <div class="radio_ans">
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".navbar-toggle"' ng-change=" " name="rdoResult">.navbar-toggle</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".navbar-text"' ng-change=" " name="rdoResult">.navbar-text</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".navbar-static-top"' ng-change=" " name="rdoResult">.navbar-static-top</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='".navbar-right"' ng-change=" " name="rdoResult">.navbar-right</label>
+                            </div>
+                         </div>     
+                    </div>
+                </div>
+            </step>
+            <step class="step5 " name="last ">
+                <div class="steps ">
+                    <div class="container ">
+                        <div id="starttime"></div>
+
+                        <div id="endtime"></div>
+
+                        <div id="showtime"></div>
+                        <div class="timer16 count">
+                            <h3 id="count_17">Time Left {{countDown015}} sec</h3>
+                        </div>
+                        <div class="button_np">
+                            <button type=" button " class="btn btn-secondary btn-lg  prev" step-previous>Prev</button>
+                            <button type="button " class="btn btn-secondary btn-lg " step-next ng-click="fetch15() ">Submit</button>
+                        </div>
+                        <div><h1 class="tickques">Q15 : Tick the correct answer ? </h1></div>
+                        <div id="ques15" class="radio_ques">15. Which of the following selector selects all elements of E that have the attribute attr that end with the given value ?</div>
+                        <div class="radio_ans">
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"E[attr^=value]"' ng-change=" " name="rdoResult">E[attr^=value]</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"E[attr$=value]"' ng-change=" " name="rdoResult">E[attr$=value]</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"E[attr*=value]"' ng-change=" " name="rdoResult">E[attr*=value]</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" ng-model='result' ng-value='"none of the mentioned"' ng-change=" " name="rdoResult">none of the mentioned</label>
+                            </div>
+                         </div>     
+                    </div>
+                </div>
+            </step>
+        </steps>
+    </form>
+</body>
+
+</html>

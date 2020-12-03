@@ -1,0 +1,23 @@
+<section>
+    <button type="submit" onclick="func()">hello</button>
+</section>
+<script>
+    
+    function func()
+    {
+        console.log("hi")
+        var jsondata = {"name":"akarshit"}
+        $.ajax({
+                type: "GET",
+                url: 'http://localhost:8080/here',
+                             
+                async: false,
+                success: function(response) {
+                    alert(response)    
+                },
+                error: function() {
+                    //alert('fail');
+                }
+            });
+    }
+</script>

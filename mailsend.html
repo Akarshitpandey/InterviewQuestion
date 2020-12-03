@@ -1,0 +1,26 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.0/dist/email.min.js">
+</script>
+<script type="text/javascript">
+    (function() {
+        emailjs.init("user_g6wheXudV4emIs9n9wTPb"); //Insert your User ID
+    })();
+</script>
+<script>
+    var templateParams = {
+        name: 'Sender',
+        notes: 'Test email'
+    };
+
+    function send() {
+        emailjs.send('mohitsri9@gmail.com', 'template_6c45wkf', templateParams) //Insert your email service ID and email template ID
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+                console.log('FAILED...', error);
+            });
+    }
+</script>
+<section>
+    <input type="text" id="send1">
+    <button type="button" onclick="send()"></button>
+</section>
